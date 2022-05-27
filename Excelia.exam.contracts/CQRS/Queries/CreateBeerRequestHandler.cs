@@ -40,7 +40,8 @@ public class CreateBeerRequestHandler:IRequestHandler<CreateBeerCommand, CreateB
         Beer beer = new ()
         {
             Name = request.Name,
-            Rating = request.Rating
+            Rating = request.Rating,
+            CreatedDate= DateTimeOffset.Now
         };
         _dbContext.Beers.Add(beer);
         await _dbContext.SaveChangesAsync(cancellationToken);
