@@ -1,9 +1,13 @@
 using Exelia.exam.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using MediatR;
+using Microsoft.OpenApi.Models;
+using Excelia.exam.Application.CQRS.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-ConfigurationManager configuration = builder.Configuration; // allows both to access and to set up the config
+var configuration = builder.Configuration; // allows both to access and to set up the config
 
 // Add services to the container.
 
@@ -16,10 +20,24 @@ services.AddDbContext<BeerCollectionDbContext>(
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
+services.AddMediatR(Assembly.GetExecutingAssembly());
+services.AddMediatR(typeof(CreateBeerQuery));
+services.AddMediatR(typeof(GetBeersQuery));
+
+
+
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Beer collection api", Version = "v1" });
+});
 
 var app = builder.Build();
-
+using(var scope = app.Services.CreateScope())
+{
+    // use context to run initial migration
+    var dbContext = scope.ServiceProvider.GetRequiredService<BeerCollectionDbContext>();
+    dbContext.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Commands\GetBeer" />
-    <Folder Include="CQRS\Commands\GetBeers" />
-    <Folder Include="CQRS\Commands\SearchBeer" />
     <Folder Include="CQRS\Commands\UpdateBeer" />
   </ItemGroup>
 

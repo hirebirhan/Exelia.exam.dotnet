@@ -8,30 +8,32 @@ using MediatR;
 
 namespace Excelia.exam.Application.CQRS.Queries;
 
-public class CreateBeerRequestHandler:IRequestHandler<CreateBeerCommand, CreateBeerResponse>
+public class CreateBeerQuery:IRequestHandler<CreateBeerCommand, CreateBeerResponse>
 {
     private readonly BeerCollectionDbContext _dbContext;
     private readonly CreateBeerValidator _validator;
 
     
-    public CreateBeerRequestHandler(BeerCollectionDbContext dbContext)
+    public CreateBeerQuery(BeerCollectionDbContext dbContext)
     {
         _dbContext = dbContext;
         _validator = new CreateBeerValidator(dbContext);
     }
     public async Task<CreateBeerResponse> Handle(CreateBeerCommand request, CancellationToken cancellationToken)
     {
-        CreateBeerResponse response = new CreateBeerResponse();
+        CreateBeerResponse response = new();
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
         {
             response.Success = false;
             response.StatusCode = HttpStatusCode.BadRequest;
+            response.Errors = new List<Error>();
             foreach (var error in validationResult.Errors)
             {
                 response.Errors.Add(new Error()
                 {
-                    Description = error.ErrorCode+" " +error.ErrorMessage, Message = error.ErrorMessage
+                    Description = error.PropertyName+ " " +error.ErrorMessage, 
+                    Message = error.ErrorMessage
                 });
             }
             return  response;
