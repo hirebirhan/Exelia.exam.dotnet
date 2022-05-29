@@ -26,6 +26,10 @@ namespace Exelia.exam.Api.Controllers
         public async Task<IActionResult> Create(CreateBeerCommand command)
         {
             var response = await _mediator.Send(command);
+            if (!response.Success)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
             return StatusCode(StatusCodes.Status201Created, response);
 
         }
