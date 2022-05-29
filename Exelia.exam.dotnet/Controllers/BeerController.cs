@@ -1,8 +1,8 @@
 ﻿using Excelia.exam.Application.CQRS.Commands.CreateBeer;
 using Excelia.exam.Application.CQRS.Commands.GetBeers;
 using Excelia.exam.Application.CQRS.Commands.SearchBeer;
-using Excelia.exam.Application.CQRS.DTO;
 using Exelia.exam.Business.CQRS.Commands.UpdateBeer;
+using Excelia.exam.Application.CQRS.DTO;
 using Exelia.exam.Business.CQRS.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +26,10 @@ namespace Exelia.exam.Api.Controllers
         public async Task<IActionResult> Create(CreateBeerCommand command)
         {
             var response = await _mediator.Send(command);
+            if (!response.Success)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
             return StatusCode(StatusCodes.Status201Created, response);
 
         }
