@@ -15,9 +15,9 @@ namespace Exelia.exam.Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        public BeerController(IMediator meditator)
+        public BeerController(IMediator mediator)
         {
-            _mediator = meditator;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -36,9 +36,9 @@ namespace Exelia.exam.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetBeersResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<GetBeersResponse> GetAll([FromQuery] int PageNumber, [FromQuery] int PageSize)
+        public async Task<GetBeersResponse> GetAll([FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
-            GetBeersCommand command = new(PageSize, PageNumber);
+            GetBeersCommand command = new(pageSize, pageNumber);
             return await _mediator.Send(command);
         }
 

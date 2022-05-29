@@ -41,19 +41,19 @@ public class AddBeerRatingQuery : IRequestHandler<AddBeerRatingCommand, AddBeerR
             return response;
         }
 
-            var rating = new Rating()
-            {
-                BeerId = request.BeerId, RatingValue = request.Rating, CreatedDate = DateTimeOffset.Now
-            };
-            _dbContext.Ratings.Add(rating);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            response.Success = true;
-            response.Data = new BeerResource()
-            {
-                Name = beer.Name,
-                Id = beer.Id,
-                Rating = RatingHelper.CalculateRating(beer.Ratings)
-            };
+        var rating = new Rating()
+        {
+            BeerId = request.BeerId, RatingValue = request.Rating, CreatedDate = DateTimeOffset.Now
+        };
+        _dbContext.Ratings.Add(rating);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        response.Success = true;
+        response.Data = new BeerResource()
+        {
+            Name = beer.Name,
+            Id = beer.Id,
+            Rating = RatingHelper.CalculateRating(beer.Ratings)
+        };
         
         return response;
     }
