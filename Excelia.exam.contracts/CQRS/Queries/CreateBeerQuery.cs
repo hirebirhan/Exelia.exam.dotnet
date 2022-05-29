@@ -1,6 +1,7 @@
 ﻿using Excelia.exam.Application.CQRS.Commands.CreateBeer;
 using Excelia.exam.Application.CQRS.DTO;
 using Excelia.exam.contracts.common;
+using Exelia.exam.Business.Helpers;
 using Exelia.exam.Data;
 using FluentValidation.Results;
 using MediatR;
@@ -28,11 +29,7 @@ public class CreateBeerQuery : IRequestHandler<CreateBeerCommand, CreateBeerResp
         {
             response.Success = false;
             response.StatusCode = HttpStatusCode.BadRequest;
-            response.Errors = new List<Error>();
-            foreach (var error in validationResult.Errors)
-            {
-                response.Errors.Add(new Error(error.PropertyName + " " + error.ErrorMessage, error.ErrorMessage));
-            }
+            response.Errors = ValidationErrorHelper.GetErrorMessage(validationResult.Errors);
 
             return response;
         }
@@ -48,7 +45,8 @@ public class CreateBeerQuery : IRequestHandler<CreateBeerCommand, CreateBeerResp
         response.Data = new BeerResource()
         {
             Id = beer.Id, Name = beer.Name,
-            Rating = beer.Ratings.Average(r=>r.RatingValue)
+             Rating = RatingHelper.CalculateRating(beer.Ratings)
+
         };
     return response;
     }

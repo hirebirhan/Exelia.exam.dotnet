@@ -8,5 +8,9 @@ public class SearchBeerResponse : ApiResponse<BeerResource>
     {
         Data = beers;
     }
+    public SearchBeerResponse()
+    {
+
+    }
     public new List<BeerResource> Data { get; set; }
 }

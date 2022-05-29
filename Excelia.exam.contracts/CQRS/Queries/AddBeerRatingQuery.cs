@@ -2,6 +2,7 @@
 using Excelia.exam.contracts.common;
 using Exelia.exam.Business.CQRS.Commands.UpdateBeer;
 using Exelia.exam.Business.CQRS.DTO;
+using Exelia.exam.Business.Helpers;
 using Exelia.exam.Data;
 using MediatR;
 
@@ -25,14 +26,10 @@ public class AddBeerRatingQuery : IRequestHandler<AddBeerRatingCommand, AddBeerR
         if(!validationResult.IsValid)
         {
             response.Success = false;
-            response.Errors = new List<Error>();
-            foreach (var error in validationResult.Errors)
-            {
-                response.Errors.Add(new Error(error.PropertyName + ":- " + error.ErrorMessage, error.ErrorMessage));
-            }
-            return response;
+            response.Errors = response.Errors = ValidationErrorHelper.GetErrorMessage(validationResult.Errors);
+
         }
-        
+
         var beer = await _dbContext.Beers.FindAsync(new object?[] { request.BeerId }, cancellationToken);
         if(beer == null)
         {
@@ -55,7 +52,7 @@ public class AddBeerRatingQuery : IRequestHandler<AddBeerRatingCommand, AddBeerR
             {
                 Name = beer.Name,
                 Id = beer.Id,
-                Rating = beer.Ratings.Average(br => br.RatingValue)
+                Rating = RatingHelper.CalculateRating(beer.Ratings)
             };
         
         return response;

@@ -11,7 +11,7 @@ public class CreateBeerValidator : AbstractValidator<CreateBeerCommand>
     public CreateBeerValidator(BeerCollectionDbContext dbContext)
     {
         _dbContext = dbContext;
-        RuleFor(b => b.Name).NotNull().MustAsync(UniqueBeerName).WithMessage("Beer name cannot be duplicated");
+        RuleFor(b => b.Name).NotNull().NotEmpty().MinimumLength(3).MustAsync(UniqueBeerName).WithMessage("Beer name cannot be duplicated");
     }
 
     private async Task<bool> UniqueBeerName(string beerName, CancellationToken cancellationToken)

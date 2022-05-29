@@ -1,5 +1,6 @@
 ﻿using Excelia.exam.Application.CQRS.Commands.GetBeers;
 using Excelia.exam.Application.CQRS.DTO;
+using Exelia.exam.Business.Helpers;
 using Exelia.exam.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,8 @@ public class GetBeersQuery : IRequestHandler<GetBeersCommand, GetBeersResponse>
             {
                 Id = b.Id,
                 Name = b.Name,
-                Rating = b.Ratings.Average(r => r.RatingValue)
+                Rating = RatingHelper.CalculateRating(b.Ratings)
+
             })
             .Skip((request.PageNumber-1)*request.PageSize)
             .Take(request.PageSize)
@@ -34,4 +36,6 @@ public class GetBeersQuery : IRequestHandler<GetBeersCommand, GetBeersResponse>
         response.StatusCode = HttpStatusCode.OK;
         return response;
     }
+
+   
 }
