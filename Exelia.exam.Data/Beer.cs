@@ -6,5 +6,5 @@ public class Beer : BaseEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int Rating { get; set; }
+    public virtual List<Rating> Ratings { get; set; }
 }

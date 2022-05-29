@@ -18,12 +18,20 @@ public class GetBeersQuery : IRequestHandler<GetBeersCommand, GetBeersResponse>
     public async Task<GetBeersResponse> Handle(GetBeersCommand request, CancellationToken cancellationToken)
     {
         var response = new GetBeersResponse();
-        var items = await _dbContext.Beers.Select(b => new BeerResource(b.Id, b.Name, b.Rating)).ToListAsync(cancellationToken);
+        var items = await _dbContext.Beers.Include(x => x.Ratings)
+            .Select(b => new BeerResource()
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Rating = b.Ratings.Average(r => r.RatingValue)
+            })
+            .Skip((request.PageNumber-1)*request.PageSize)
+            .Take(request.PageSize)
+            .ToListAsync(cancellationToken);
         response.Success = true;
         response.Data = items;
         response.TotalCount = items.Count;
         response.StatusCode = HttpStatusCode.OK;
-
         return response;
     }
 }

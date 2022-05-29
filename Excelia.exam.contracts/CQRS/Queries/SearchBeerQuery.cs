@@ -4,29 +4,32 @@ using Exelia.exam.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Excelia.exam.Application.CQRS.Queries
-{
-    internal class SearchBeerQuery : IRequestHandler<SearchBeerCommand, SearchBeerResponse>
-    {
-        private readonly BeerCollectionDbContext _dbContext;
+namespace Exelia.exam.Business.CQRS.Queries;
 
-        public SearchBeerQuery(BeerCollectionDbContext dbContext)
+internal class SearchBeerQuery : IRequestHandler<SearchBeerCommand, SearchBeerResponse>
+{
+    private readonly BeerCollectionDbContext _dbContext;
+
+    public SearchBeerQuery(BeerCollectionDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+    public async Task<SearchBeerResponse> Handle(SearchBeerCommand request, CancellationToken cancellationToken)
+    {
+        if (request == null)
         {
-            _dbContext = dbContext;
+            throw new ArgumentNullException(nameof(request));
         }
-        public async Task<SearchBeerResponse> Handle(SearchBeerCommand request, CancellationToken cancellationToken)
+        var data = await _dbContext.Beers.Where(b => b.Name.Contains(request.Name)).Select(be => new BeerResource()
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-            var data = await _dbContext.Beers.Where(b => b.Name.Contains(request.Name)).Select(be => new BeerResource(be.Id, be.Name, be.Rating)).ToListAsync(cancellationToken);
-            SearchBeerResponse response = new(data)
-            {
-                Success = data.Count > 0,
-                Data = data
-            };
-            return response;
-        }
+            Id = be.Id, Name = be.Name, Rating = be.Ratings.Average(r=>r.RatingValue)
+        }).ToListAsync(cancellationToken);
+        SearchBeerResponse response = new(data)
+        {
+            Success = data.Count > 0,
+            Data = data,
+            StatusCode= System.Net.HttpStatusCode.OK
+        };
+        return response;
     }
 }

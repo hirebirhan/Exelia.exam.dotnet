@@ -10,11 +10,17 @@ namespace Exelia.exam.Data
             : base(options)
         {
         }
-
-
-
-
-        public DbSet<Beer> Beers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Beer>()
+                .Property(b => b.Name)
+                .IsRequired();
+            
+            modelBuilder.Entity<Beer>()
+                .HasMany(b => b.Ratings);
+        }
+        public DbSet<Beer> Beers { get; set; } 
+        public DbSet<Rating> Ratings { get; set; }
 
     }
 }

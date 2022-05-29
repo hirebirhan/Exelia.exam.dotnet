@@ -19,6 +19,7 @@ public class CreateBeerQuery : IRequestHandler<CreateBeerCommand, CreateBeerResp
         _dbContext = dbContext;
         _validator = new CreateBeerValidator(dbContext);
     }
+
     public async Task<CreateBeerResponse> Handle(CreateBeerCommand request, CancellationToken cancellationToken)
     {
         CreateBeerResponse response = new();
@@ -30,25 +31,25 @@ public class CreateBeerQuery : IRequestHandler<CreateBeerCommand, CreateBeerResp
             response.Errors = new List<Error>();
             foreach (var error in validationResult.Errors)
             {
-                response.Errors.Add(new Error()
-                {
-                    Description = error.PropertyName + " " + error.ErrorMessage,
-                    Message = error.ErrorMessage
-                });
+                response.Errors.Add(new Error(error.PropertyName + " " + error.ErrorMessage, error.ErrorMessage));
             }
+
             return response;
         }
 
         Beer beer = new()
         {
             Name = request.Name,
-            Rating = request.Rating,
             CreatedDate = DateTimeOffset.Now
         };
         _dbContext.Beers.Add(beer);
         await _dbContext.SaveChangesAsync(cancellationToken);
         response.Success = true;
-        response.Data = new BeerResource(beer.Id, beer.Name, beer.Rating);
-        return response;
+        response.Data = new BeerResource()
+        {
+            Id = beer.Id, Name = beer.Name,
+            Rating = beer.Ratings.Average(r=>r.RatingValue)
+        };
+    return response;
     }
 }
