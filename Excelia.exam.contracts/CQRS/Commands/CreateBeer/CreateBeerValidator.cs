@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Excelia.exam.Application.CQRS.Commands.CreateBeer;
 
-public class CreateBeerValidator:AbstractValidator<CreateBeerCommand>
+public class CreateBeerValidator : AbstractValidator<CreateBeerCommand>
 {
     private readonly BeerCollectionDbContext _dbContext;
 

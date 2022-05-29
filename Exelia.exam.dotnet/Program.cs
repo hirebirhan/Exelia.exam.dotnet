@@ -1,9 +1,9 @@
-using Exelia.exam.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using MediatR;
-using Microsoft.OpenApi.Models;
 using Excelia.exam.Application.CQRS.Queries;
+using Exelia.exam.Data;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -32,7 +32,7 @@ services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     // use context to run initial migration
     var dbContext = scope.ServiceProvider.GetRequiredService<BeerCollectionDbContext>();

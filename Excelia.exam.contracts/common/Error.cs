@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace Excelia.exam.contracts.common;
+﻿namespace Excelia.exam.contracts.common;
 
 public class Error
 {

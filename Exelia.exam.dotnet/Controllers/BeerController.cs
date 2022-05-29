@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Excelia.exam.Application.CQRS.Commands.CreateBeer;
-using Excelia.exam.Application.CQRS.DTO;
+﻿using Excelia.exam.Application.CQRS.Commands.CreateBeer;
 using Excelia.exam.Application.CQRS.Commands.GetBeers;
 using Excelia.exam.Application.CQRS.Commands.SearchBeer;
+using Excelia.exam.Application.CQRS.DTO;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Exelia.exam.Api.Controllers
 {
@@ -32,7 +32,7 @@ namespace Exelia.exam.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<GetBeersResponse> GetAll([FromRoute] int PageSize, int PageNumber)
         {
-            GetBeersCommand command = new (PageSize, PageNumber);
+            GetBeersCommand command = new(PageSize, PageNumber);
             return await _mediator.Send(command);
         }
 

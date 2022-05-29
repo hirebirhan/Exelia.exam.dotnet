@@ -1,19 +1,19 @@
-﻿using System.Net;
-using Excelia.exam.Application.CQRS.Commands.CreateBeer;
+﻿using Excelia.exam.Application.CQRS.Commands.CreateBeer;
 using Excelia.exam.Application.CQRS.DTO;
 using Excelia.exam.contracts.common;
 using Exelia.exam.Data;
 using FluentValidation.Results;
 using MediatR;
+using System.Net;
 
 namespace Excelia.exam.Application.CQRS.Queries;
 
-public class CreateBeerQuery:IRequestHandler<CreateBeerCommand, CreateBeerResponse>
+public class CreateBeerQuery : IRequestHandler<CreateBeerCommand, CreateBeerResponse>
 {
     private readonly BeerCollectionDbContext _dbContext;
     private readonly CreateBeerValidator _validator;
 
-    
+
     public CreateBeerQuery(BeerCollectionDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -32,18 +32,18 @@ public class CreateBeerQuery:IRequestHandler<CreateBeerCommand, CreateBeerRespon
             {
                 response.Errors.Add(new Error()
                 {
-                    Description = error.PropertyName+ " " +error.ErrorMessage, 
+                    Description = error.PropertyName + " " + error.ErrorMessage,
                     Message = error.ErrorMessage
                 });
             }
-            return  response;
+            return response;
         }
 
-        Beer beer = new ()
+        Beer beer = new()
         {
             Name = request.Name,
             Rating = request.Rating,
-            CreatedDate= DateTimeOffset.Now
+            CreatedDate = DateTimeOffset.Now
         };
         _dbContext.Beers.Add(beer);
         await _dbContext.SaveChangesAsync(cancellationToken);

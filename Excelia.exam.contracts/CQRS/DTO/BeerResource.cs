@@ -4,8 +4,8 @@ public class BeerResource
 {
     public BeerResource(int id, string name, int rating)
     {
-        this.Id= id;
-        this.Name=name;
+        this.Id = id;
+        this.Name = name;
         this.Rating = rating;
 
     }

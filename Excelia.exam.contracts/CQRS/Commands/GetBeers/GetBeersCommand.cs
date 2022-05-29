@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Excelia.exam.Application.CQRS.Commands.GetBeers;
 
-public class GetBeersCommand: IRequest<GetBeersResponse>
+public class GetBeersCommand : IRequest<GetBeersResponse>
 {
     public GetBeersCommand(int pageSize, int pageNumber)
     {

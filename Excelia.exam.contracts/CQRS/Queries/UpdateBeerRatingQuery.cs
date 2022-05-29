@@ -1,13 +1,13 @@
-﻿using System.Net;
-using Excelia.exam.contracts.common;
+﻿using Excelia.exam.contracts.common;
 using Exelia.exam.Business.CQRS.Commands.UpdateBeer;
 using Exelia.exam.Business.CQRS.DTO;
 using Exelia.exam.Data;
 using MediatR;
+using System.Net;
 
 namespace Excelia.exam.Application.CQRS.Queries;
 
-public class UpdateBeerRatingQuery: IRequestHandler<UpdateBeerRatingCommand, UpdateBeerRatingResponse>
+public class UpdateBeerRatingQuery : IRequestHandler<UpdateBeerRatingCommand, UpdateBeerRatingResponse>
 {
     private readonly BeerCollectionDbContext _dbContext;
 
@@ -31,14 +31,14 @@ public class UpdateBeerRatingQuery: IRequestHandler<UpdateBeerRatingCommand, Upd
             return response;
         }
 
-        var entity =await _dbContext.Beers.FindAsync(new object?[] { request.Id }, cancellationToken);
-        if (entity!=null)
+        var entity = await _dbContext.Beers.FindAsync(new object?[] { request.Id }, cancellationToken);
+        if (entity != null)
         {
             entity.Rating = request.Rating;
             _dbContext.Update(entity);
             await _dbContext.SaveChangesAsync(cancellationToken);
             response.Success = true;
-            response.StatusCode= HttpStatusCode.OK;
+            response.StatusCode = HttpStatusCode.OK;
             response.Data = new DTO.BeerResource(entity.Id, entity.Name, entity.Rating);
             return response;
         }
@@ -54,8 +54,8 @@ public class UpdateBeerRatingQuery: IRequestHandler<UpdateBeerRatingCommand, Upd
                 }
             };
         }
-       
-        
+
+
         return response;
     }
 }

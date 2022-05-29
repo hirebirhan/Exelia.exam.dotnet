@@ -6,7 +6,7 @@ namespace Excelia.exam.contracts.common
     {
         public bool Success { get; set; }
         public T Data { get; set; }
-        public  HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
         public List<Error> Errors { get; set; }
 
     }

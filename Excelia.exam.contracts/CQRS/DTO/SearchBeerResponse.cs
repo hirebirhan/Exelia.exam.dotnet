@@ -2,11 +2,11 @@
 
 namespace Excelia.exam.Application.CQRS.DTO;
 
-public class SearchBeerResponse: ApiResponse<BeerResource>
+public class SearchBeerResponse : ApiResponse<BeerResource>
 {
     public SearchBeerResponse(List<BeerResource> beers)
     {
         Data = beers;
     }
-    public new  List<BeerResource> Data { get; set; }
+    public new List<BeerResource> Data { get; set; }
 }

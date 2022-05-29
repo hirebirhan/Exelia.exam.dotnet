@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Excelia.exam.Application.CQRS.Commands.SearchBeer
 {
-    public class SearchBeerCommand: IRequest<SearchBeerResponse>
+    public class SearchBeerCommand : IRequest<SearchBeerResponse>
     {
         public SearchBeerCommand(string name)
         {

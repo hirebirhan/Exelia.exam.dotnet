@@ -20,7 +20,7 @@ namespace Excelia.exam.Application.CQRS.Queries
             {
                 throw new ArgumentNullException(nameof(request));
             }
-            var data= await _dbContext.Beers.Where(b=>b.Name.Contains(request.Name)).Select(be=> new BeerResource(be.Id, be.Name, be.Rating)).ToListAsync(cancellationToken);
+            var data = await _dbContext.Beers.Where(b => b.Name.Contains(request.Name)).Select(be => new BeerResource(be.Id, be.Name, be.Rating)).ToListAsync(cancellationToken);
             SearchBeerResponse response = new(data)
             {
                 Success = data.Count > 0,
