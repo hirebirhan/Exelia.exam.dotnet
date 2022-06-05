@@ -52,19 +52,29 @@ namespace Exelia.exam.Api.Controllers
         [HttpGet("search{name}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchBeerResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<SearchBeerResponse> Search([FromRoute] string name)
+        public async Task<IActionResult> Search([FromRoute] string name)
         {
             SearchBeerCommand command = new(name);
-            return await _mediator.Send(command);
+            var response = await _mediator.Send(command);
+            if (!response.Success)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, response);
+            }
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
         [HttpPost("{beerId}rate")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddBeerRatingResponse))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<AddBeerRatingResponse> Rate([FromRoute]int beerId, decimal rate)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Rate([FromRoute]int beerId, decimal rate)
         {
             AddBeerRatingCommand command = new(rate, beerId);
-            return await _mediator.Send(command);
+            var response = await _mediator.Send(command);
+            if (!response.Success)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+            return StatusCode(StatusCodes.Status200OK, response);
         }
     }
 }

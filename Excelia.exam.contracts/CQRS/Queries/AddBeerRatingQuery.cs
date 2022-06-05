@@ -27,6 +27,7 @@ public class AddBeerRatingQuery : IRequestHandler<AddBeerRatingCommand, AddBeerR
         {
             response.Success = false;
             response.Errors = response.Errors = ValidationErrorHelper.GetErrorMessage(validationResult.Errors);
+            return response;
 
         }
 
