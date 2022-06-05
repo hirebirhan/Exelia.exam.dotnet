@@ -19,7 +19,8 @@ public class GetBeersQuery : IRequestHandler<GetBeersCommand, GetBeersResponse>
     public async Task<GetBeersResponse> Handle(GetBeersCommand request, CancellationToken cancellationToken)
     {
         var response = new GetBeersResponse();
-        var items = await _dbContext.Beers.Include(x => x.Ratings)
+        var items = await _dbContext.Beers
+            .Include(x => x.Ratings)
             .Select(b => new BeerResource()
             {
                 Id = b.Id,
@@ -32,7 +33,7 @@ public class GetBeersQuery : IRequestHandler<GetBeersCommand, GetBeersResponse>
             .ToListAsync(cancellationToken);
         response.Success = true;
         response.Data = items;
-        response.TotalCount = items.Count;
+        response.TotalCount = await _dbContext.Beers.AsNoTracking().CountAsync(cancellationToken);
         response.StatusCode = HttpStatusCode.OK;
         return response;
     }

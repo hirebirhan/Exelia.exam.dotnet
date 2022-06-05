@@ -5,11 +5,10 @@ namespace Exelia.exam.Data
 {
     public class BeerCollectionDbContext : DbContext
     {
-
-        public BeerCollectionDbContext(DbContextOptions<BeerCollectionDbContext> options)
-            : base(options)
+        public BeerCollectionDbContext(DbContextOptions options) : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Beer>()

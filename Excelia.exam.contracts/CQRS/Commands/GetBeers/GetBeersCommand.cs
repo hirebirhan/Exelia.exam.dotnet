@@ -7,10 +7,10 @@ public class GetBeersCommand : IRequest<GetBeersResponse>
 {
     public GetBeersCommand(int pageSize, int pageNumber)
     {
-        PageNumber = pageNumber < 1 ? 1 : pageNumber;
-        PageSize = pageSize < 10 ? 10 : pageSize;
+        PageNumber = pageNumber>0?pageNumber:1;
+        PageSize = pageSize>0?pageSize:10;
     }
-  
+    
     public int PageSize { get; set; }
     public int PageNumber { get; set; }
 }

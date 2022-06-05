@@ -5,11 +5,15 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exelia.exam.Api", "Exelia.exam.Api.csproj", "{F4A074E6-4ECF-48D4-804B-E46374C586ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exelia.exam.Business", "..\Excelia.exam.contracts\Exelia.exam.Business.csproj", "{D5D97CF8-E573-4F3C-8CA0-70E6CE7B8B0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exelia.exam.Application", "..\Excelia.exam.contracts\Exelia.exam.Application.csproj", "{D5D97CF8-E573-4F3C-8CA0-70E6CE7B8B0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exelia.exam.Data", "..\Exelia.exam.Data\Exelia.exam.Data.csproj", "{EA7D3ECE-B1A8-45D4-B362-7724FE8F88ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{60BDBC75-4058-4D23-84E1-39D229D051CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3122E379-DA29-4C36-BFAB-C12A4926E7AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exelia.exam.unit.test", "..\Exelia.exam.unit.test\Exelia.exam.unit.test.csproj", "{5D6F85D1-1222-40BE-9599-1BFAC38E3207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,10 @@ Global
 		{EA7D3ECE-B1A8-45D4-B362-7724FE8F88ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA7D3ECE-B1A8-45D4-B362-7724FE8F88ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA7D3ECE-B1A8-45D4-B362-7724FE8F88ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D6F85D1-1222-40BE-9599-1BFAC38E3207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D6F85D1-1222-40BE-9599-1BFAC38E3207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D6F85D1-1222-40BE-9599-1BFAC38E3207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D6F85D1-1222-40BE-9599-1BFAC38E3207}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +45,7 @@ Global
 		{F4A074E6-4ECF-48D4-804B-E46374C586ED} = {60BDBC75-4058-4D23-84E1-39D229D051CC}
 		{D5D97CF8-E573-4F3C-8CA0-70E6CE7B8B0E} = {60BDBC75-4058-4D23-84E1-39D229D051CC}
 		{EA7D3ECE-B1A8-45D4-B362-7724FE8F88ED} = {60BDBC75-4058-4D23-84E1-39D229D051CC}
+		{5D6F85D1-1222-40BE-9599-1BFAC38E3207} = {3122E379-DA29-4C36-BFAB-C12A4926E7AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {719338EC-21A8-43EE-AE04-8615B947034F}

@@ -6,9 +6,7 @@ namespace Exelia.exam.Business.Helpers
     {
         public static decimal CalculateRating(List<Rating> ratings)
         {
-
-            if (ratings == null || ratings.Count <= 0) return 0;
-            return Math.Round( ratings.Average(r => r.RatingValue), 2);
+            return ratings is not { Count: > 0 } ? 0 : Math.Round( ratings.Average(r => r.RatingValue), 2);
         } 
     }
 }

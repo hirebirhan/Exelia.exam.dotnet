@@ -19,7 +19,11 @@ namespace Exelia.exam.Api.Controllers
         {
             _mediator = mediator;
         }
-
+/// <summary>
+/// This end point is to create new beer
+/// </summary>
+/// <param name="command"></param>
+/// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateBeerResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
