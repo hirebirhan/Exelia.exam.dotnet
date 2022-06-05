@@ -6,9 +6,12 @@ using Excelia.exam.Application.CQRS.DTO;
 using Exelia.exam.Business.CQRS.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Exelia.exam.Api.Controllers
 {
+
+    [ExcludeFromCodeCoverage]
     [Route("api/beer")]
     [ApiController]
     public class BeerController : ControllerBase

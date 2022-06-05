@@ -24,13 +24,12 @@ public class CreateBeerQuery : IRequestHandler<CreateBeerCommand, CreateBeerResp
     public async Task<CreateBeerResponse> Handle(CreateBeerCommand request, CancellationToken cancellationToken)
     {
         CreateBeerResponse response = new();
-        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
         {
             response.Success = false;
             response.StatusCode = HttpStatusCode.BadRequest;
             response.Errors = ValidationErrorHelper.GetErrorMessage(validationResult.Errors);
-
             return response;
         }
 
